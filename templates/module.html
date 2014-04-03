@@ -1,11 +1,13 @@
-{% set info = {'query' :['select * from dns_zone',
-'select * from wpo_table where zone_id in {primary_key}'],
-'pk_field' : 'zone_id'} %}
+{% set query = {'primary' : 'select * from global_storage_config', 'global_storage_config' : 'select * from global_storage_config where idx in {primary}'} %}
+{% set keep_svn = ['starfs/mime.conf'] %}
 
-
-<html>
-<head><title>Test module</title></head>
-<body>
-{{ data }}
-</body>
-</html>
+{% set html = "<?xml version='1.0' encoding='utf-8'?>
+<starfs>
+	<global>
+		<config>
+{% for param in data.params %}
+			<param name='{{data.name}}' value='{{data.value}}'/>
+{% endfor %}
+		</config>
+	</global>
+</starfs>" %}

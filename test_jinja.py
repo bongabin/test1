@@ -1,4 +1,4 @@
-from jinja2 import Environment, PackageLoader
+from jinja2 import Environment, PackageLoader, Template
 
 
 def test_hello():
@@ -18,14 +18,40 @@ def test_module():
         for query in m.info['query']:
             print query
 
+    m.info['param'] = 'param'
+    m.info['name'] = 'starfsd.MaxLockTimeout'
+    m.info['value'] = 3600
+
     print '========================'
     print template.render(data=m.info)
     print '========================'
 
 
+def test_module2():
+    env = Environment(loader=PackageLoader('test_jinja', 'templates'))
+    template = env.get_template('module.html')
+    m = template.module
+
+    template = Template(m.html)
+
+    data = {}
+    data['params'] = {}
+    data.params['name'] = 'brwon'
+    data.params['value'] = 'hahaha'
+
+
+    print '========================'
+    print template.render(data=data)
+    print '========================'
+
+
 def main():
     #test_hello()
-    test_module()
+    #test_module()
+
+    test_module2()
+
+
 
 
 
